@@ -51,10 +51,10 @@ function validate_square(data){
 	emv = (maxX - minX + 1) * (maxY - minY + 1);
 
 	if (DEBUG) {
-		console.log("all_y:", all_y);
-		console.log("all_x:", all_x);
-		console.log("emv:", emv)
-		console.log("minX:", minX, "maxX:", maxX, "minY:", minY, "maxY:", maxY)
+		// console.log("all_y:", all_y);
+		// console.log("all_x:", all_x);
+		// console.log("emv:", emv)
+		// console.log("minX:", minX, "maxX:", maxX, "minY:", minY, "maxY:", maxY)
 	}
 
 	// if all x or all x are the same then we have a line hor or ver
@@ -165,12 +165,12 @@ $(document).ready(function(){
 		}
 		else{
 			if (validate_square(pairs)) {
-				console.log("Shape accepted");
 				accept_shapes();
+				console.log("Shape accepted");
 			}
 			else{
-				console.log("Not accepted shape");
 				blink(".clicked", 300);
+				console.log("Not accepted shape");
 			}
 
 		}
