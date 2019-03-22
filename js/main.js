@@ -72,27 +72,31 @@ function accept_shapes(){
 
 	});
 	// update score
-	var score = $('.accepted player').length
+	var score = $('.player').length
 	$('#score').html(score);
 };
 
-// function getRandom(arr, n) {
-//     var result = new Array(n),
-//         len = arr.length,
-//         taken = new Array(len);
-//     if (n > len)
-//         throw new RangeError("getRandom: more elements taken than available");
-//     while (n--) {
-//         var x = Math.floor(Math.random() * len);
-//         result[n] = arr[x in taken ? taken[x] : x];
-//         taken[x] = --len in taken ? taken[len] : len;
-//     }
-//     return result;
-// }
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
 
+function set_box(pair){
+	$('*[data-x='+ pair.x +'][data-y='+ pair.y +']').addClass("accepted computer").removeClass("empty");
+}
 
 function computer_play(){
 	var pairs = [];
+	var to_fill;
 	$('.empty').each(function(index, td) {
 		var tmp_y = $(td).attr('data-y');
 		var tmp_x = $(td).attr('data-x');
@@ -104,12 +108,20 @@ function computer_play(){
 
 	});
 
-	dice_one = Math.floor(Math.random() * 5) + 1  
-	dice_two = Math.floor(Math.random() * 5) + 1  
+	dice_one = Math.floor(Math.random() * 6) + 1  
+	dice_two = Math.floor(Math.random() * 6) + 1  
 
 	result = dice_one * dice_two;
 	// now computer can fill squares
+	console.log(pairs)
+	to_fill = getRandom(pairs, result)
 
+	$.each(to_fill, function (index, pair) {
+		set_box(pair)
+	});
+
+	console.log("will fill ", result, " squares")
+	console.log("to fill:", to_fill)
 
 };
 
