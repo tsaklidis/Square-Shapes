@@ -1,0 +1,20 @@
+#field{margin: 0px auto;}
+
+td{
+	border: 1px solid #7eb6ed;
+	padding: 10px;
+}
+
+td:not(.accepted):hover{
+	background-color: #7eb6ed;
+	cursor: pointer;
+}
+
+
+#panel{text-align: center;}
+#save:hover{cursor: pointer;}
+.clicked{background-color: #7eb6ed;}
+.player{background-color: #ED857E;border: none;}
+.pl_color{background-color: #ed857e;border-color: #ed857e; color:white;}
+
+.computer{background-color: #fff3cd;border-color: #ffeeba;}
