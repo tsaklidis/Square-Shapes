@@ -90,8 +90,8 @@ function getRandom(arr, n) {
     return result;
 }
 
-function set_box(pair){
-	$('*[data-x='+ pair.x +'][data-y='+ pair.y +']').addClass("accepted computer").removeClass("empty");
+function set_box(x,y){
+	$('*[data-x='+ x +'][data-y='+ y +']').addClass("accepted computer").removeClass("empty");
 }
 
 function computer_play(){
@@ -113,15 +113,26 @@ function computer_play(){
 
 	result = dice_one * dice_two;
 	// now computer can fill squares
-	console.log(pairs)
-	to_fill = getRandom(pairs, result)
+	first_pair = getRandom(pairs, 1)
 
-	$.each(to_fill, function (index, pair) {
-		set_box(pair)
-	});
 
-	console.log("will fill ", result, " squares")
-	console.log("to fill:", to_fill)
+	console.log("start cords:", first_pair[0].x, first_pair[0].x)
+	console.log("dice:", dice_one, "X", dice_two)
+
+	var tmp_x = first_pair[0].x;
+	var tmp_y = first_pair[0].y;
+	for (var i = 0; i < dice_one; i++) {
+
+		set_box(tmp_x, tmp_y)
+		
+		for (var j = 0; j < dice_two; j++) {
+			set_box(tmp_x, tmp_y)
+			tmp_x = tmp_x + 1;
+		}
+		tmp_x = first_pair[0].x;
+		tmp_y = tmp_y + 1;
+
+	}
 
 };
 
@@ -166,6 +177,7 @@ $(document).ready(function(){
 		else{
 			if (validate_square(pairs)) {
 				accept_shapes();
+				computer_play();
 				console.log("Shape accepted");
 			}
 			else{
