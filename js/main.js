@@ -1,7 +1,7 @@
 var DEBUG = true;
 var FIELD = {
-	x_axis:30,
-	y_axis:20,
+	x_axis:31,
+	y_axis:21,
 	id: "#field"
 };
 var dice_one = dice_two = 0;
@@ -13,13 +13,23 @@ function blink(that, ms){
 function FIeldCreate(field){
 	// Generates the field
 	var table = $(field.id);
-	for (var y = 0; y < field.y_axis; y++) {
+	for (var y = -1; y < field.y_axis; y++) {
 		var tr = $('<tr>');		
-			for (var x = 0; x < field.x_axis; x++) {
-				var td = $('<td></td>');
+			for (var x = -1; x < field.x_axis; x++) {
+				if (y==-1) {
+					var td = $('<td class="cord">'+ x +'</td>');
+				}
+				else if(x==-1){
+					var td = $('<td class="cord">'+ y +'</td>');
+				}
+				else{
+					var td = $('<td></td>');
+				}
 				td.attr('data-y', y);
 				td.attr('data-x', x);
-				td.addClass('empty');
+				if(!td.hasClass('cord')){
+					td.addClass('empty');
+				}
 				td.appendTo(tr);
 			}
 		tr.appendTo(table);
@@ -74,6 +84,7 @@ function accept_shapes(){
 	// update score
 	var score = $('.player').length
 	$('#score').html(score);
+
 };
 
 function getRandom(arr, n) {
@@ -89,14 +100,25 @@ function getRandom(arr, n) {
     }
     return result;
 }
-
+function check_box(x,y){
+	if($('*[data-x='+ x +'][data-y='+ y +']').hasClass('empty')){
+		return true
+	}
+	console.log("Unavailable box:", x,y);
+	return false
+}
 function set_box(x,y){
-	$('*[data-x='+ x +'][data-y='+ y +']').addClass("accepted computer").removeClass("empty");
+	if (check_box(x,y)) {
+		$('*[data-x='+ x +'][data-y='+ y +']').addClass("accepted computer").removeClass("empty");
+	}
 }
 
 function computer_play(){
 	var pairs = [];
 	var to_fill;
+	var available = [2,3,4,5,6];
+	var good = true;
+
 	$('.empty').each(function(index, td) {
 		var tmp_y = $(td).attr('data-y');
 		var tmp_x = $(td).attr('data-x');
@@ -108,31 +130,66 @@ function computer_play(){
 
 	});
 
-	dice_one = Math.floor(Math.random() * 6) + 1  
-	dice_two = Math.floor(Math.random() * 6) + 1  
 
-	result = dice_one * dice_two;
+	ar_dice_one = getRandom(available, 1)
+	ar_dice_two = getRandom(available, 1)
+
+	dice_one = ar_dice_one[0];
+	dice_two = ar_dice_two[0];
+
+	$('#one').html(dice_one); blink('#one', 100); 
+	$('#two').html(dice_two); blink('#two', 100);
+
 	// now computer can fill squares
 	first_pair = getRandom(pairs, 1)
 
-
 	console.log("start cords:", first_pair[0].x, first_pair[0].x)
-	console.log("dice:", dice_one, "X", dice_two)
+	console.log("dice:", dice_one, dice_two)
+
+	// check if box can be set
 
 	var tmp_x = first_pair[0].x;
 	var tmp_y = first_pair[0].y;
 	for (var i = 0; i < dice_one; i++) {
 
-		set_box(tmp_x, tmp_y)
+		if(!check_box(tmp_x, tmp_y)){
+			good = false;
+		}
 		
 		for (var j = 0; j < dice_two; j++) {
-			set_box(tmp_x, tmp_y)
+			if (!check_box(tmp_x, tmp_y)) {
+				good = false
+			}
 			tmp_x = tmp_x + 1;
 		}
 		tmp_x = first_pair[0].x;
 		tmp_y = tmp_y + 1;
 
 	}
+
+	if (good) {
+		tmp_x = first_pair[0].x;
+		tmp_y = first_pair[0].y;
+		for (var i = 0; i < dice_one; i++) {
+
+			set_box(tmp_x, tmp_y)
+			
+			for (var j = 0; j < dice_two; j++) {
+				set_box(tmp_x, tmp_y)
+				tmp_x = tmp_x + 1;
+			}
+			tmp_x = first_pair[0].x;
+			tmp_y = tmp_y + 1;
+
+		}
+	}
+	else{
+		// computer_play();
+		alert("Not so smart, you play...")
+	}
+
+	var comp_score = $('.computer').length
+	$('#comp_score').html(comp_score);
 
 };
 

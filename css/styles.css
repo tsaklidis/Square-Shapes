@@ -5,7 +5,7 @@ td{
 	padding: 10px;
 }
 
-td:not(.accepted):hover{
+td:not(.accepted):not(.cord):hover{
 	background-color: #7eb6ed;
 	cursor: pointer;
 }
@@ -17,4 +17,9 @@ td:not(.accepted):hover{
 .player{background-color: #ED857E;border: none;}
 .pl_color{background-color: #ed857e;border-color: #ed857e; color:white;}
 
-.computer{background-color: #fff3cd;border-color: #ffeeba;}
+.computer{background-color: #fff3cd;border-color: #ffeeba;border: none;}
+.cord{
+	border: 0px;
+	padding: 0px;
+	font-size: 11px;
+}
