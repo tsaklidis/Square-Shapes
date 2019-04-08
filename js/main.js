@@ -5,6 +5,7 @@ var FIELD = {
 	id: "#field"
 };
 var dice_one = dice_two = 0;
+var cmp_tries = 0;
 
 function blink(that, ms){
 	$(that).fadeIn(ms).fadeOut(ms).fadeIn(ms).fadeOut(ms).fadeIn(ms);
@@ -114,6 +115,7 @@ function set_box(x,y){
 }
 
 function computer_play(){
+	cmp_tries = cmp_tries + 1;
 	var pairs = [];
 	var to_fill;
 	var available = [2,3,4,5,6];
@@ -182,10 +184,15 @@ function computer_play(){
 			tmp_y = tmp_y + 1;
 
 		}
+		cmp_tries = 0;
 	}
 	else{
-		// computer_play();
-		alert("Not so smart, you play...")
+		if (cmp_tries < 10) {
+			computer_play();
+		}
+		else{
+			alert("Not so smart, you play...")
+		}
 	}
 
 	var comp_score = $('.computer').length
@@ -243,6 +250,7 @@ $(document).ready(function(){
 			}
 
 		}
+		cmp_tries = 0;
 	}); 
 
 });
