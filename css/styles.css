@@ -31,3 +31,13 @@ td:not(.accepted):not(.cord):hover{
     margin: 0px auto;
 
 }
+
+#comp_msg{
+	background-color: #cdd5ff;
+	margin: 5px auto;
+	max-width: 420px;
+	display: block;
+	padding: 15px;
+	border-radius: 4px;
+}
+#save:hover, #skip:hover{cursor: pointer;}

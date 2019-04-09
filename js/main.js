@@ -17,16 +17,20 @@ function blink(that, ms, times){
 }
 
 function roll_dices(){
+	console.log("Rolling...")
 	ar_dice_one = getRandom(available, 1)
 	ar_dice_two = getRandom(available, 1)
 
 	dice_one = ar_dice_one[0];
 	dice_two = ar_dice_two[0];
 
-	$('#dice_one').attr('src', 'img/'+dice_one+'.png'); blink('#dice_one', 300, 3);
-	$('#dice_two').attr('src', 'img/'+dice_two+'.png'); blink('#dice_two', 300, 3);
+	$('#dice_one').attr('src', 'img/'+dice_one+'.png');
+	$('#dice_two').attr('src', 'img/'+dice_two+'.png');
+
+	// blink('#dice_wrp', 300, 2); 
 
 	squares_left = dice_one * dice_two;
+	console.log(dice_one, dice_two);
 }
 
 function FIeldCreate(field){
@@ -119,7 +123,7 @@ function check_box(x,y){
 	if($('*[data-x='+ x +'][data-y='+ y +']').hasClass('empty')){
 		return true
 	}
-	console.log("Unavailable box:", x,y);
+	// console.log("Unavailable box:", x,y);
 	return false
 }
 function set_box(x,y){
@@ -129,6 +133,7 @@ function set_box(x,y){
 }
 
 function computer_play(){
+	console.log("Cmp tries:", cmp_tries)
 	cmp_tries = cmp_tries + 1;
 	var pairs = [];
 	var to_fill;
@@ -146,14 +151,11 @@ function computer_play(){
 
 	});
 
-
-	roll_dices();
-
 	// now computer can fill squares
 	first_pair = getRandom(pairs, 1)
 
-	console.log("start cords:", first_pair[0].x, first_pair[0].x)
-	console.log("dice:", dice_one, dice_two)
+	// console.log("start cords:", first_pair[0].x, first_pair[0].x)
+	// console.log("dice:", dice_one, dice_two)
 
 	// check if box can be set
 
@@ -194,11 +196,13 @@ function computer_play(){
 		cmp_tries = 0;
 	}
 	else{
-		if (cmp_tries < 10) {
+		if (cmp_tries < 100) {
 			computer_play();
 		}
 		else{
-			$('#comp_msg').html("Can't create any shapes, you play..."); blink("#comp_msg", 400, 2);
+			$('#comp_msg').css({"display":"block"}).html("Can't create any shapes, you play..."); blink("#comp_msg", 400, 2);
+			$('#comp_msg').css({"display":"none"});
+			roll_dices();
 		}
 	}
 
@@ -235,6 +239,7 @@ $(document).ready(function(){
 	}); 
 
 	$('#save').click(function(){
+		$('#comp_msg').html("");
 		var pairs = [];
 		$('.clicked').each(function(index, td) {
 			var tmp_y = $(td).attr('data-y');
@@ -252,6 +257,7 @@ $(document).ready(function(){
 		else{
 			if (validate_square(pairs)) {
 				accept_shapes();
+				roll_dices();
 				computer_play();
 				console.log("Shape accepted");
 			}
@@ -261,10 +267,12 @@ $(document).ready(function(){
 			}
 
 		}
+		$('#comp_msg').html();
 		cmp_tries = 0;
 	}); 
 
 	$('#skip').click(function(){
+		roll_dices();
 		computer_play();
 		cmp_tries = 0;
 	}); 
