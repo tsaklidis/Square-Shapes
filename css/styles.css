@@ -17,7 +17,7 @@ td:not(.accepted):not(.cord):hover{
 .player{background-color: #ED857E;border: none;}
 .pl_color{background-color: #ed857e;border-color: #ed857e; color:white;}
 
-.computer{background-color: #fff3cd;border-color: #ffeeba;border: none;}
+.computer{background-color: #fff3cd !important;border-color: #ffeeba;border: none ;}
 .cord{
 	border: 0px;
 	padding: 0px;

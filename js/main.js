@@ -9,9 +9,12 @@ var available = [2,3,4,5,6];
 var cmp_tries = 0;
 var squares_left;
 
-function blink(that, ms){
-	$(that).fadeIn(ms).fadeOut(ms).fadeIn(ms).fadeOut(ms).fadeIn(ms);
-};
+function blink(that, ms, times){
+	for (var i = 0; i < times; i++) {
+		$(that).fadeIn(ms).fadeOut(ms);
+	}
+	$(that).fadeIn(ms);
+}
 
 function roll_dices(){
 	ar_dice_one = getRandom(available, 1)
@@ -20,8 +23,8 @@ function roll_dices(){
 	dice_one = ar_dice_one[0];
 	dice_two = ar_dice_two[0];
 
-	$('#dice_one').attr('src', 'img/'+dice_one+'.png'); blink('#dice_one', 400);
-	$('#dice_two').attr('src', 'img/'+dice_two+'.png'); blink('#dice_two', 400);
+	$('#dice_one').attr('src', 'img/'+dice_one+'.png'); blink('#dice_one', 300, 3);
+	$('#dice_two').attr('src', 'img/'+dice_two+'.png'); blink('#dice_two', 300, 3);
 
 	squares_left = dice_one * dice_two;
 }
@@ -195,7 +198,7 @@ function computer_play(){
 			computer_play();
 		}
 		else{
-			alert("Not so smart, you play...")
+			$('#comp_msg').html("Can't create any shapes, you play..."); blink("#comp_msg", 400, 2);
 		}
 	}
 
@@ -244,7 +247,7 @@ $(document).ready(function(){
 
 		});
 		if (pairs.length < 1) {
-			blink('#field', 100)
+			blink('#field', 100, 3)
 		}
 		else{
 			if (validate_square(pairs)) {
@@ -253,12 +256,19 @@ $(document).ready(function(){
 				console.log("Shape accepted");
 			}
 			else{
-				blink(".clicked", 300);
+				blink(".clicked", 300, 3);
 				console.log("Not accepted shape");
 			}
 
 		}
 		cmp_tries = 0;
 	}); 
+
+	$('#skip').click(function(){
+		computer_play();
+		cmp_tries = 0;
+	}); 
+
+
 
 });
