@@ -2,6 +2,7 @@
 <br>
 <h5>Create some shapes</h5>
 <h5>Try the live version of <a href="https://tsaklidis.gr/shapes/">the game</a></h5>
+
 ![](screens/view.png)
 
 <p>Game rules and logic:</p>
