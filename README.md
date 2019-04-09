@@ -2,7 +2,7 @@
 <br>
 <h5>Create some shapes</h5>
 
-![](screens/1.png)
+![](screens/home.png)
 
 <p>Game rules and logic:</p>
 <p>
