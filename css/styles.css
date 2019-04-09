@@ -23,3 +23,11 @@ td:not(.accepted):not(.cord):hover{
 	padding: 0px;
 	font-size: 11px;
 }
+.dice_wrp{}
+#dice_one, #dice_two{display: inline-block; max-width: 100px;}
+.rules {
+    max-width: 760px;
+    display: block;
+    margin: 0px auto;
+
+}

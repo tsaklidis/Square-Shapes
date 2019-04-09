@@ -5,11 +5,26 @@ var FIELD = {
 	id: "#field"
 };
 var dice_one = dice_two = 0;
+var available = [2,3,4,5,6];
 var cmp_tries = 0;
+var squares_left;
 
 function blink(that, ms){
 	$(that).fadeIn(ms).fadeOut(ms).fadeIn(ms).fadeOut(ms).fadeIn(ms);
 };
+
+function roll_dices(){
+	ar_dice_one = getRandom(available, 1)
+	ar_dice_two = getRandom(available, 1)
+
+	dice_one = ar_dice_one[0];
+	dice_two = ar_dice_two[0];
+
+	$('#dice_one').attr('src', 'img/'+dice_one+'.png'); blink('#dice_one', 400);
+	$('#dice_two').attr('src', 'img/'+dice_two+'.png'); blink('#dice_two', 400);
+
+	squares_left = dice_one * dice_two;
+}
 
 function FIeldCreate(field){
 	// Generates the field
@@ -35,6 +50,9 @@ function FIeldCreate(field){
 			}
 		tr.appendTo(table);
 	}
+	// roll the dices
+	roll_dices();
+
 };
 
 function validate_square(data){
@@ -61,18 +79,11 @@ function validate_square(data){
 
 	emv = (maxX - minX + 1) * (maxY - minY + 1);
 
-	if (DEBUG) {
-		// console.log("all_y:", all_y);
-		// console.log("all_x:", all_x);
-		// console.log("emv:", emv)
-		// console.log("minX:", minX, "maxX:", maxX, "minY:", minY, "maxY:", maxY)
-	}
-
 	// if all x or all x are the same then we have a line hor or ver
 	var equal_y = all_y.every( (val, i, arr) => val === arr[0] );
 	var equal_x = all_x.every( (val, i, arr) => val === arr[0] )
 
-	if (emv == selected_squares && !equal_y && !equal_x) {return true;}
+	if (emv == selected_squares && !equal_y && !equal_x && squares_left==0) {return true;}
 	else{return false;}
 
 };
@@ -118,7 +129,7 @@ function computer_play(){
 	cmp_tries = cmp_tries + 1;
 	var pairs = [];
 	var to_fill;
-	var available = [2,3,4,5,6];
+	
 	var good = true;
 
 	$('.empty').each(function(index, td) {
@@ -133,14 +144,7 @@ function computer_play(){
 	});
 
 
-	ar_dice_one = getRandom(available, 1)
-	ar_dice_two = getRandom(available, 1)
-
-	dice_one = ar_dice_one[0];
-	dice_two = ar_dice_two[0];
-
-	$('#one').html(dice_one); blink('#one', 100); 
-	$('#two').html(dice_two); blink('#two', 100);
+	roll_dices();
 
 	// now computer can fill squares
 	first_pair = getRandom(pairs, 1)
@@ -214,12 +218,16 @@ $(document).ready(function(){
 		var locked = $( this ).hasClass( "accepted" );
 		if ( !locked ) {
 			if ( $( this ).hasClass( "clicked" ) ) {
+				squares_left = squares_left + 1;
 				$(this).removeClass('clicked');
 			}
 			else{
+				squares_left = squares_left - 1;
 				$(this).addClass('clicked');
 			}
 		}
+		
+
 
 	}); 
 

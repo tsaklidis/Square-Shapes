@@ -8,6 +8,8 @@
 
 	<script src="js/libs/jquery.min.js"></script>
 	<script src="js/main.js"></script>
+
+	<link rel="shortcut icon" type="image/icon" href="img/favicon.ico"/>
 </head>
 <body>
 
@@ -27,9 +29,27 @@
 				<br>
 				<div class="btn btn-success" id="save">Save Shape</div>
 
-				<br>
-				<div>Dice one:<span id="one"></span></div>
-				<div>Dice two:<span id="two"></span></div>
+				<hr>
+				<div id="dice_wrp">
+					<p>Create a shape with the rolled dices:</p>
+					<img id='dice_one' src=""> <img id='dice_two' src="">
+				</div>
+
+				<br><br><br>
+				<div class="text-left rules">
+					<p>
+						Human VS Computer. There are two dices with values from 2 to 6. <i>Number 1 is excluded due to game rules.</i>
+
+					</p>
+					<ul>
+						<li>Two dices are rolled.</li>
+						<li>Make a rectangle or a square with te sides generated.</li>
+						<li>When all space is filled the game is completed.</li>
+						<li>If computer or player can't create a shape, it's the opponents' turn to play.</li>
+						<li>After creating a shape, click the green button to save it.</li>
+					</ul>
+				</div>
+
 			</div>
 
 			<div class="col-md-2">
