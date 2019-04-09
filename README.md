@@ -1,7 +1,7 @@
 <h4>Squares game</h4>
 <br>
 <h5>Create some shapes</h5>
-
+<h5>Try the live version of <a href="https://tsaklidis.gr/shapes/">the game</a></h5>
 ![](screens/home.png)
 
 <p>Game rules and logic:</p>
