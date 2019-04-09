@@ -9,6 +9,7 @@ var available = [2,3,4,5,6];
 var cmp_tries = 0;
 var squares_left;
 
+
 function blink(that, ms, times){
 	for (var i = 0; i < times; i++) {
 		$(that).fadeIn(ms).fadeOut(ms);
