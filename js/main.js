@@ -209,6 +209,7 @@ function computer_play(){
 
 	var comp_score = $('.computer').length
 	$('#comp_score').html(comp_score);
+	roll_dices();
 
 };
 
